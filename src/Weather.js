@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import FormattedDate from "./FormattedDate.js";
 import FormattedTime from "./FormattedTime.js";
+import WeatherForecast from "./WeatherForecast.js";
 import WeatherInfo from "./WeatherInfo.js";
 import "./Weather.css";
 
 export default function Weather(props) {
   const [city, setCity] = useState(props.defaultCity);
   const [weatherData, setWeatherData] = useState({ ready: false });
+  const [forecastData, setForecastData] = useState({ ready: false });
 
   function handleResponse(response) {
-    console.log(response.data);
     setWeatherData({
       ready: true,
       date: new Date(response.data.dt * 1000),
@@ -18,19 +19,27 @@ export default function Weather(props) {
       temperature: response.data.main.temp,
       humidity: response.data.main.humidity,
       description: response.data.weather[0].description,
-      icon: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      icon: response.data.weather[0].icon,
       wind: response.data.wind.speed,
       city: response.data.name,
       tempHigh: response.data.main.temp_max,
       tempLow: response.data.main.temp_min,
       feelsLike: response.data.main.feels_like,
     });
+
+    const apiKey = "eda5f4c1faef5ba99e914999cfcb1292";
+    let forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&exclude={part}&appid=${apiKey}&units=metric`;
+    axios.get(forecastUrl).then(handleForecastResponse);
   }
 
-  function search() {
+  function handleForecastResponse(response) {
+    setForecastData({ ready: true, data: response.data.daily });
+  }
+
+  async function search() {
     const apiKey = "eda5f4c1faef5ba99e914999cfcb1292";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
+    await axios.get(apiUrl).then(handleResponse);
   }
 
   function handleSubmit(event) {
@@ -42,7 +51,7 @@ export default function Weather(props) {
     setCity(event.target.value);
   }
 
-  if (weatherData.ready) {
+  if (weatherData.ready && forecastData.ready) {
     return (
       <div className="Weather">
         <div className="Header row align-items-start">
@@ -70,6 +79,13 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
+        <div className="d-flex justify-content-evenly">
+          <WeatherForecast forecast={forecastData.data[1]} />
+          <WeatherForecast forecast={forecastData.data[2]} />
+          <WeatherForecast forecast={forecastData.data[3]} />
+          <WeatherForecast forecast={forecastData.data[4]} />
+          <WeatherForecast forecast={forecastData.data[5]} />
+        </div>
       </div>
     );
   } else {
