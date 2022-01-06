@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function FormattedTime(props) {
-  let hours = props.date.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
+  function convertToStandardTime(hour, minute) {
+    let meridiem;
+
+    if (minute < 10) {
+      minute = "0" + minute;
+    }
+
+    if (hour >= 12) {
+      meridiem = "pm";
+    } else {
+      meridiem = "am";
+    }
+
+    if (hour > 12) {
+      return `${hour - 12}:${minute} ${meridiem}`;
+    } else {
+      return `${hour}:${minute} ${meridiem}`;
+    }
   }
 
+  let hours = props.date.getHours();
   let minutes = props.date.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
-  return (
-    <div>
-      {hours}:{minutes}
-    </div>
-  );
+  return <div>{convertToStandardTime(hours, minutes)}</div>;
 }
