@@ -2,9 +2,14 @@
   max-width: 700px;
   font-family: "Raleway", sans-serif;
   margin: 30px auto;
+  color: rgb(114, 114, 114);
 }
 
 .App footer {
   font-size: 14px;
   margin: 10px 0;
+}
+
+.App .footer {
+  text-align: center;
 }

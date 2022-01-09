@@ -11,7 +11,7 @@ export default function WeatherForecast(props) {
   }
   return (
     <div className="WeatherForecast d-flex justify-space-evenly flex-column align-items-center">
-      <span>{day()}</span>
+      <span className="forecast-day">{day()}</span>
       <div className="icon-container">
         <WeatherIcon
           icon={props.forecast.weather[0].icon}
@@ -20,7 +20,7 @@ export default function WeatherForecast(props) {
         />
       </div>
 
-      <span>
+      <span className="forecast-temp">
         {Math.round(props.forecast.temp.max)}°/
         {Math.round(props.forecast.temp.min)}°
       </span>

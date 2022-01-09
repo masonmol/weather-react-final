@@ -1,0 +1,11 @@
+body {
+  background: none !important;
+}
+
+html {
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgb(226, 240, 254) 0%,
+    rgb(255, 247, 228) 90%
+  );
+}

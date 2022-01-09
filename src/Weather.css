@@ -27,15 +27,14 @@
   margin-bottom: 10px;
   font-size: 17px;
 }
-
-.Search .btn {
+.btn {
   background-color: rgb(160, 201, 247);
   border-color: rgb(178, 210, 247);
   color: white;
   font-family: "Raleway", sans-serif;
 }
 
-.Search .btn:hover {
+.btn:hover {
   background-color: rgb(110, 127, 145);
   border-color: rgb(110, 127, 145);
   color: white;
@@ -50,7 +49,6 @@
 
 .Row {
   display: flex;
-  padding-bottom: 10px;
 }
 
 .Row .img {
