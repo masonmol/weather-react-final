@@ -28,7 +28,7 @@ export default function Weather(props) {
     });
 
     const apiKey = "eda5f4c1faef5ba99e914999cfcb1292";
-    let forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&exclude={part}&appid=${apiKey}&units=metric`;
+    let forecastUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.data.coord.lat}&lon=${response.data.coord.lon}&exclude={part}&appid=${apiKey}&units=imperial`;
     axios.get(forecastUrl).then(handleForecastResponse);
   }
 
@@ -38,7 +38,7 @@ export default function Weather(props) {
 
   async function search() {
     const apiKey = "eda5f4c1faef5ba99e914999cfcb1292";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
     await axios.get(apiUrl).then(handleResponse);
   }
 
